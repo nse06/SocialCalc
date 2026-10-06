@@ -1,10 +1,13 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { type ReactNode, useState } from "react";
 import { ChoiceGroup } from "@/components/ui/choice-group";
 import { PlatformIcon, Minus, Plus, Sparkle } from "@/components/ui/icons";
 import { NumberField } from "@/components/ui/number-field";
 import { track } from "@/lib/analytics";
+import { FEATURES } from "@/lib/features";
+import { supportsLookup } from "@/lib/lookup/client";
 import {
   EXCLUSIVITY_IDS,
   LOCATION_IDS,
@@ -165,6 +168,8 @@ export function EffortStep({ draft, update, advance }: StepProps) {
 
 // 4 ─ Audience ───────────────────────────────────────────────────────────────
 
+const ProfileLookup = dynamic(() => import("./profile-lookup").then((m) => m.ProfileLookup), { ssr: false });
+
 export function AudienceStep({ draft, update, showErrors, advance }: StepProps) {
   const platform = getPlatform(draft.platform as PlatformId);
   const content = getContentType(draft.platform as PlatformId, draft.contentType);
@@ -178,6 +183,7 @@ export function AudienceStep({ draft, update, showErrors, advance }: StepProps) 
         subtitle="Brands care most about how many people will actually see the content."
       />
       <div className="grid gap-7">
+        {FEATURES.profileLookup && supportsLookup(draft.platform) ? <ProfileLookup draft={draft} update={update} /> : null}
         <NumberField
           label={capitalize(platform.audienceNoun)}
           hint="A rough number is fine — “12k” works."

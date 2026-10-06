@@ -41,3 +41,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# cloudflare (local secrets for `wrangler pages dev`)
+.dev.vars
+.wrangler/

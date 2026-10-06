@@ -16,4 +16,10 @@ export const FEATURES = {
    * The extraction interface lives in src/lib/deal-extraction.
    */
   dealEmailParser: process.env.NEXT_PUBLIC_FEATURE_DEAL_PARSER === "true",
+  /**
+   * "Fill this in from your channel": looks up public stats by handle via
+   * /api/profile (functions/api/profile.ts). Turn on together with the
+   * endpoint's YOUTUBE_API_KEY.
+   */
+  profileLookup: process.env.NEXT_PUBLIC_FEATURE_PROFILE_LOOKUP === "true",
 } as const;

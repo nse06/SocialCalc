@@ -1,6 +1,7 @@
 "use client";
 
 import { Pencil } from "@/components/ui/icons";
+import { FEATURES } from "@/lib/features";
 import { formatMoney, formatSignedMoney } from "@/lib/pricing/format";
 import type { RateResult } from "@/lib/pricing/types";
 import { SITE } from "@/lib/site";
@@ -104,6 +105,9 @@ export function RateCard({ result, originalAsk, animateFromZero, onEditAnswers }
       </div>
       <p className="mt-3 text-[13px] leading-snug text-night-muted">
         This is a negotiation starting point, not a guaranteed market rate.
+        {FEATURES.profileLookup && result.deal.platform === "youtube"
+          ? " It's our independent estimate — not provided, approved, or endorsed by YouTube or Google."
+          : null}
       </p>
     </section>
   );

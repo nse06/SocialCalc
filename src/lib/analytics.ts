@@ -20,6 +20,7 @@ export type AnalyticsEvent =
   | "quote_copied"
   | "share_link_copied"
   | "deal_email_parsed"
+  | "profile_lookup"
   | "template_copied";
 
 export type AnalyticsProps = Record<string, string | number | boolean | null | undefined>;

@@ -1,5 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { type Page, expect, test } from "@playwright/test";
+import { mockProfileLookup } from "./profile-lookup";
 
 async function audit(page: Page) {
   const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();
@@ -17,6 +18,7 @@ test.describe("accessibility", () => {
     "/exclusivity-fee-calculator",
     "/brand-deal-email-templates",
     "/privacy",
+    "/terms",
   ]) {
     test(`${path} has no WCAG A/AA violations`, async ({ page }) => {
       await page.goto(path);
@@ -28,6 +30,19 @@ test.describe("accessibility", () => {
     await page.goto("/calculator?p=instagram&c=reel&pr=standard");
     await page.getByRole("button", { name: "Continue" }).click(); // show validation errors too
     await audit(page);
+  });
+
+  test("profile lookup has no violations", async ({ page }) => {
+    await mockProfileLookup(page);
+    await page.goto("/calculator?p=youtube&c=integration&pr=standard");
+    const handle = page.getByRole("textbox", { name: "Your YouTube handle or channel link" });
+    await handle.fill("not a handle");
+    await page.getByRole("button", { name: "Look up" }).click();
+    await audit(page); // error state
+    await handle.fill("@testkitchen");
+    await page.getByRole("button", { name: "Look up" }).click();
+    await expect(page.getByRole("link", { name: "Data from YouTube" })).toBeVisible();
+    await audit(page); // filled state
   });
 
   test("results page has no violations", async ({ page }) => {

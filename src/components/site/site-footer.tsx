@@ -54,6 +54,11 @@ export function SiteFooter() {
                 </Link>
               </li>
               <li>
+                <Link href="/terms" className="text-ink-soft transition-colors hover:text-ink">
+                  Terms
+                </Link>
+              </li>
+              <li>
                 <Link href="/privacy" className="text-ink-soft transition-colors hover:text-ink">
                   Privacy
                 </Link>

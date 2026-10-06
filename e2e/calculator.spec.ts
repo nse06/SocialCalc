@@ -1,4 +1,5 @@
 import { type Page, expect, test } from "@playwright/test";
+import { LOOKUP_PROFILE, mockProfileLookup } from "./profile-lookup";
 
 const money = (text: string) => Number(text.replace(/[^\d]/g, ""));
 
@@ -174,6 +175,81 @@ test.describe("calculator", () => {
   });
 });
 
+test.describe("profile lookup", () => {
+  test("fills the audience answers from a YouTube handle", async ({ page }) => {
+    const requests = await mockProfileLookup(page);
+    await page.goto("/calculator?p=youtube&c=integration&pr=standard");
+    await page.getByRole("textbox", { name: "Your YouTube handle or channel link" }).fill("youtube.com/@testkitchen");
+    await page.getByRole("button", { name: "Look up" }).click();
+
+    await expect(page.getByRole("status").filter({ hasText: "Filled in your subscribers (125K)" })).toContainText(
+      "typical views (40K), and engagement (4.2%) from 5 recent long-form videos",
+    );
+    expect(requests[0].searchParams.get("platform")).toBe("youtube");
+    await expect(page.getByRole("textbox", { name: "Subscribers" })).toHaveValue("125,000");
+    await expect(page.getByRole("textbox", { name: /Typical views per video/ })).toHaveValue("40,000");
+    await expect(page.getByRole("link", { name: "Data from YouTube" })).toHaveAttribute("href", LOOKUP_PROFILE.profileUrl);
+
+    await page.getByRole("button", { name: "Continue" }).click();
+    await expect(page.getByRole("textbox", { name: "Engagement rate" })).toHaveValue("4.2");
+
+    // Analytics stay anonymous: an outcome and buckets, never the handle.
+    const events = await page.evaluate(() => window.__analyticsEvents?.filter((e) => e.event === "profile_lookup") ?? []);
+    expect(events).toHaveLength(1);
+    expect(events[0].props).toMatchObject({ outcome: "found", filled_views: true, audience: "100K-1M" });
+    expect(JSON.stringify(events)).not.toContain("testkitchen");
+  });
+
+  test("uses Shorts numbers for a Shorts deal and says what's missing", async ({ page }) => {
+    await mockProfileLookup(page, 200, { ...LOOKUP_PROFILE, followers: null, formats: { short: LOOKUP_PROFILE.formats.short } });
+    await page.goto("/calculator?p=youtube&c=short&pr=standard");
+    await page.getByRole("textbox", { name: "Your YouTube handle or channel link" }).fill("@testkitchen");
+    await page.keyboard.press("Enter");
+    await expect(page.getByRole("status").filter({ hasText: "Filled in" })).toContainText(
+      "Filled in your typical views (100K) and engagement (4%) from 3 recent Shorts. Check them and change anything that looks off. This channel hides its subscriber count, so add it below.",
+    );
+    await expect(page.getByRole("textbox", { name: "Subscribers" })).toHaveValue("");
+  });
+
+  test("explains when a channel can't be found, and the form still works", async ({ page }) => {
+    await mockProfileLookup(page, 404, { error: "not_found", message: "We couldn't find that YouTube channel." });
+    await page.goto("/calculator?p=youtube&c=integration&pr=standard");
+    await page.getByRole("textbox", { name: "Your YouTube handle or channel link" }).fill("@nobody");
+    await page.getByRole("button", { name: "Look up" }).click();
+    await expect(page.getByText("We couldn't find that channel. Check the spelling, or enter your numbers below.")).toBeVisible();
+    await page.getByRole("textbox", { name: "Subscribers" }).fill("20k");
+    await page.getByRole("checkbox", { name: /not sure/ }).check();
+    await page.getByRole("button", { name: "Continue" }).click();
+    await expect(page.getByRole("heading", { name: "How engaged is your audience?" })).toBeVisible();
+  });
+
+  test("the filled card fits a 320px screen", async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 720 });
+    await mockProfileLookup(page, 200, {
+      ...LOOKUP_PROFILE,
+      displayName: "A Very Long Channel Name That Keeps Going",
+      handle: "@thelongestchannelhandle_ever",
+    });
+    await page.goto("/calculator?p=youtube&c=integration&pr=standard");
+    await page.getByRole("textbox", { name: "Your YouTube handle or channel link" }).fill("@thelongestchannelhandle_ever");
+    await page.getByRole("button", { name: "Look up" }).click();
+    await expect(page.getByRole("link", { name: "Data from YouTube" })).toBeVisible();
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+    expect(overflow).toBeLessThanOrEqual(0);
+  });
+
+  test("isn't offered on platforms it can't look up", async ({ page }) => {
+    await page.goto("/calculator?p=instagram&c=reel&pr=standard");
+    await expect(page.getByRole("heading", { name: /How big is your Instagram audience/ })).toBeVisible();
+    await expect(page.getByText("Fill this in from your channel")).toHaveCount(0);
+  });
+
+  test("YouTube estimates carry the not-endorsed disclaimer", async ({ page }) => {
+    await page.goto("/calculator?p=youtube&c=integration&pr=standard&f=100000&v=20000&e=4&n=technology&l=us-ca&u=none");
+    await expect(page.getByText("not provided, approved, or endorsed by YouTube or Google")).toBeVisible();
+  });
+});
+
 test.describe("content pages", () => {
   test.use({ permissions: ["clipboard-read", "clipboard-write"] });
 
@@ -204,6 +280,7 @@ test.describe("content pages", () => {
     "/calculators",
     "/methodology",
     "/privacy",
+    "/terms",
     "/ugc-rate-calculator",
     "/whitelisting-calculator",
     "/exclusivity-fee-calculator",
