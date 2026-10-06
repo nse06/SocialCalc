@@ -177,6 +177,21 @@ function positiveNumber(value: string | null, max: number): number | null {
 }
 
 /**
+ * A shared result link leaves out views and engagement when they were
+ * estimated. Returns the complete draft if the link describes a whole deal,
+ * otherwise null (a partial link should still ask the remaining questions).
+ */
+export function sharedLinkDraft(base: CalculatorDraft, preset: DraftPreset): CalculatorDraft | null {
+  const draft: CalculatorDraft = {
+    ...base,
+    ...preset,
+    viewsUnknown: !preset.views,
+    engagementSkipped: !preset.engagementRate,
+  };
+  return draftToDeal(draft) ? draft : null;
+}
+
+/**
  * Parses whatever valid fields a URL contains. Invalid values are ignored,
  * so a mangled link degrades to a partially filled calculator, never a crash.
  */
@@ -200,11 +215,9 @@ export function searchParamsToPreset(params: URLSearchParams): DraftPreset {
 
   const views = positiveNumber(params.get(KEYS.views), limits.maxViews);
   if (views) preset.views = Math.round(views);
-  else if (followers) preset.viewsUnknown = true;
 
   const engagement = positiveNumber(params.get(KEYS.engagementRate), limits.maxEngagementPercent);
   if (engagement) preset.engagementRate = engagement;
-  else if (followers) preset.engagementSkipped = true;
 
   const niche = params.get(KEYS.niche);
   if (isOneOf(NICHE_IDS, niche)) preset.niche = niche;

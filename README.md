@@ -18,6 +18,16 @@ npm run typecheck
 npm run build      # static site in out/ — deploy to any static host/CDN
 ```
 
+## Deploy
+
+`npm run build` writes a fully static site to `out/` — no server needed.
+
+- **Vercel**: import the repo; no configuration needed.
+- **Netlify / Cloudflare Pages**: build command `npm run build`, publish directory `out`.
+- **Anything else** (S3 + CloudFront, nginx…): serve `out/`, mapping `/path` to `/path.html`.
+
+Set `NEXT_PUBLIC_SITE_URL` (see below) in the build environment.
+
 ## Change the pricing assumptions
 
 Every number lives in **`src/lib/pricing/config.ts`**: planning CPMs, creation fees, default reach, size tiers,

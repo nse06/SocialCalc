@@ -15,6 +15,7 @@ import {
   dealToSearchParams,
   draftToDeal,
   searchParamsToPreset,
+  sharedLinkDraft,
 } from "@/lib/pricing/draft";
 import {
   AudienceStep,
@@ -245,9 +246,14 @@ export function Calculator({ preset, source, framed = false, className }: Calcul
     let nextView: "steps" | "results" = "steps";
 
     if (Object.keys(fromUrl).length > 0) {
-      nextDraft = { ...initialDraft, ...fromUrl };
-      if (draftToDeal(nextDraft)) nextView = "results";
-      else nextStepId = firstIncompleteStep(nextDraft) ?? "platform";
+      const shared = sharedLinkDraft(initialDraft, fromUrl);
+      if (shared) {
+        nextDraft = shared;
+        nextView = "results";
+      } else {
+        nextDraft = { ...initialDraft, ...fromUrl };
+        nextStepId = firstIncompleteStep(nextDraft) ?? "platform";
+      }
     } else {
       const saved = readSaved(source);
       if (saved) {

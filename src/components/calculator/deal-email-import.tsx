@@ -13,7 +13,8 @@ function describe(preset: DraftPreset): string[] {
   const found: string[] = [];
   if (preset.platform) {
     const content = getContentType(preset.platform, preset.contentType);
-    found.push(content ? `${getPlatform(preset.platform).label} · ${content.label}` : getPlatform(preset.platform).label);
+    const platform = getPlatform(preset.platform).label;
+    found.push(content ? (content.label.includes(platform) ? content.label : `${platform} · ${content.label}`) : platform);
   }
   if (preset.deliverables && preset.deliverables > 1) found.push(`${preset.deliverables} deliverables`);
   if (preset.usage) {

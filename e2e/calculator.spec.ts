@@ -127,6 +127,27 @@ test.describe("calculator", () => {
     expect(new URL(page.url()).pathname).toBe("/calculator");
   });
 
+  test("the engagement helper works out the rate from a post's numbers", async ({ page }) => {
+    await page.goto("/calculator?p=instagram&c=reel&pr=standard&f=10000");
+    // Views unknown → straight to engagement after confirming the estimate.
+    await page.getByRole("checkbox", { name: /not sure/ }).check();
+    await page.getByRole("button", { name: "Continue" }).click();
+    await page.getByText("Not sure? We'll work it out.").click();
+    await page.getByRole("textbox", { name: "Likes" }).fill("250");
+    await page.getByRole("textbox", { name: "Comments" }).fill("30");
+    await page.getByRole("textbox", { name: "Saves" }).fill("20");
+    await page.getByRole("button", { name: "Use 3%" }).click();
+    await expect(page.getByRole("textbox", { name: "Engagement rate" })).toHaveValue("3");
+  });
+
+  test("the engagement helper asks for what each platform counts", async ({ page }) => {
+    await page.goto("/calculator?p=youtube&c=integration&pr=standard&f=100000&v=20000");
+    await page.getByText("Not sure? We'll work it out.").click();
+    await expect(page.getByRole("textbox", { name: "Likes" })).toBeVisible();
+    await expect(page.getByRole("textbox", { name: "Comments" })).toBeVisible();
+    await expect(page.getByRole("textbox", { name: "Saves" })).toHaveCount(0);
+  });
+
   test("validates audience input instead of crashing", async ({ page }) => {
     await page.goto("/calculator?p=instagram&c=reel&pr=standard");
     await page.getByRole("button", { name: "Continue" }).click();

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { EMPTY_DRAFT, dealToDraft, dealToSearchParams, draftToDeal, searchParamsToPreset } from "./draft";
+import { EMPTY_DRAFT, dealToDraft, dealToSearchParams, draftToDeal, searchParamsToPreset, sharedLinkDraft } from "./draft";
 import { parseHumanNumber } from "./format";
 import type { DealInputs } from "./types";
 
@@ -56,6 +56,20 @@ describe("shareable URLs", () => {
     expect(params.toString()).not.toContain("400");
     const draft = { ...EMPTY_DRAFT, ...searchParamsToPreset(params) };
     expect(draftToDeal(draft)).toEqual({ ...fullDeal, currentRate: null });
+  });
+
+  it("treats a complete link without views or engagement as estimated", () => {
+    const params = dealToSearchParams({ ...fullDeal, views: null, engagementRate: null });
+    const draft = sharedLinkDraft(EMPTY_DRAFT, searchParamsToPreset(params));
+    expect(draft).not.toBeNull();
+    expect(draftToDeal(draft!)).toMatchObject({ views: null, engagementRate: null, followers: 50_000 });
+  });
+
+  it("leaves partial links incomplete so the calculator keeps asking", () => {
+    const preset = searchParamsToPreset(new URLSearchParams("p=instagram&c=reel&f=10000"));
+    expect(sharedLinkDraft(EMPTY_DRAFT, preset)).toBeNull();
+    expect(preset.viewsUnknown).toBeUndefined();
+    expect(preset.engagementSkipped).toBeUndefined();
   });
 
   it("ignores invalid values", () => {

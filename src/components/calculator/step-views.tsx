@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, useMemo, useState } from "react";
+import { type ReactNode, useState } from "react";
 import { ChoiceGroup } from "@/components/ui/choice-group";
 import { PlatformIcon, Minus, Plus, Sparkle } from "@/components/ui/icons";
 import { NumberField } from "@/components/ui/number-field";
@@ -224,33 +224,26 @@ export function AudienceStep({ draft, update, showErrors, advance }: StepProps) 
 
 // 5 ─ Engagement ─────────────────────────────────────────────────────────────
 
-const HELPER_FIELDS = [
-  { key: "likes", label: "Likes" },
-  { key: "comments", label: "Comments" },
-  { key: "shares", label: "Shares" },
-  { key: "saves", label: "Saves" },
-] as const;
-
-type HelperKey = (typeof HELPER_FIELDS)[number]["key"];
+/** "likes + comments + saves" → ["Likes", "Comments", "Saves"] — the helper asks for what each platform counts. */
+function interactionFields(interactions: string): string[] {
+  return interactions.split("+").map((part) => capitalize(part.trim()));
+}
 
 export function EngagementStep({ draft, update, showErrors, advance }: StepProps) {
   const platformId = draft.platform as PlatformId;
   const platform = getPlatform(platformId);
   const basis = platform.engagement.basis;
-  const [helper, setHelper] = useState<Record<HelperKey, number | null>>({
-    likes: null,
-    comments: null,
-    shares: null,
-    saves: null,
-  });
+  const fields = interactionFields(platform.engagement.interactions);
+  const [helper, setHelper] = useState<Record<string, number | null>>({});
 
-  const denominator = useMemo(() => {
-    if (basis === "followers") return draft.followers ?? 0;
-    if (draft.views && !draft.viewsUnknown) return draft.views;
-    return estimateViews(platformId, draft.contentType ?? "", draft.followers);
-  }, [basis, draft.followers, draft.views, draft.viewsUnknown, draft.contentType, platformId]);
+  const denominator =
+    basis === "followers"
+      ? (draft.followers ?? 0)
+      : draft.views && !draft.viewsUnknown
+        ? draft.views
+        : estimateViews(platformId, draft.contentType ?? "", draft.followers);
 
-  const interactions = Object.values(helper).reduce<number>((sum, v) => sum + (v ?? 0), 0);
+  const interactions = fields.reduce((sum, field) => sum + (helper[field] ?? 0), 0);
   const computed = denominator > 0 && interactions > 0 ? (interactions / denominator) * 100 : null;
   const computedRounded = computed === null ? null : Number(computed.toFixed(computed < 1 ? 2 : 1));
   const per = basis === "followers" ? platform.audienceNoun : "views";
@@ -283,17 +276,18 @@ export function EngagementStep({ draft, update, showErrors, advance }: StepProps
         </summary>
         <div className="border-t border-line px-4 pt-4 pb-5">
           <p className="text-sm leading-relaxed text-muted">
-            Enter the average likes, comments, shares, and saves from a few recent posts. Leave any blank that don&apos;t apply.
+            Enter the average {platform.engagement.interactions.replaceAll(" + ", ", ")} from a few recent posts. Leave
+            any blank that don&apos;t apply.
           </p>
           <div className="mt-4 grid grid-cols-2 gap-3">
-            {HELPER_FIELDS.map((f) => (
+            {fields.map((field) => (
               <NumberField
-                key={f.key}
+                key={field}
                 size="md"
-                label={<span className="text-sm">{f.label}</span>}
+                label={<span className="text-sm">{field}</span>}
                 placeholder="0"
-                value={helper[f.key]}
-                onValueChange={(v) => setHelper((h) => ({ ...h, [f.key]: v }))}
+                value={helper[field] ?? null}
+                onValueChange={(v) => setHelper((h) => ({ ...h, [field]: v }))}
               />
             ))}
           </div>
