@@ -296,7 +296,7 @@ export const PRICING_CONFIG = {
           viewsNoun: "impressions",
           cpm: 40,
           creationFee: 250,
-          reachRate: 0.1,
+          reachRate: 0.12,
         },
         {
           id: "custom",
@@ -563,7 +563,7 @@ export const PRICING_CONFIG = {
   /** Thresholds for "this estimate is less reliable" notes. */
   reliability: {
     smallAccountFollowers: 1_000,
-    largeAccountFollowers: 5_000_000,
+    largeAccountFollowers: 1_000_000,
     viewsHighMultipleOfFollowers: 5,
     viewsLowShareOfFollowers: 0.01,
     engagementUnusualPercent: 20,

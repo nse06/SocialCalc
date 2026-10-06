@@ -146,6 +146,32 @@ describe("more rights = more money", () => {
   });
 });
 
+describe("calibration guardrails", () => {
+  // Heavier formats should never price below lighter ones on the same platform.
+  const ORDERINGS: [DealInputs["platform"], string[]][] = [
+    ["instagram", ["story", "feed-post", "carousel", "reel"]],
+    ["tiktok", ["sponsored", "plus-story"]],
+    ["youtube", ["short", "integration", "dedicated"]],
+    ["x", ["post", "thread"]],
+    ["linkedin", ["post", "video"]],
+    ["twitch", ["segment", "dedicated-stream"]],
+  ];
+
+  it.each(ORDERINGS)("%s formats are ordered by weight at every size", (platform, formats) => {
+    for (const followers of [500, 5_000, 50_000, 500_000, 5_000_000]) {
+      const totals = formats.map(
+        (contentType) => calculateRate(deal({ platform, contentType, followers, engagementRate: null })).components.total,
+      );
+      for (let i = 1; i < totals.length; i++) expect(totals[i]).toBeGreaterThanOrEqual(totals[i - 1]);
+    }
+  });
+
+  it("bigger audiences with the same performance profile cost more", () => {
+    const asks = [1_000, 10_000, 100_000, 1_000_000].map((followers) => calculateRate(deal({ followers })).components.total);
+    for (let i = 1; i < asks.length; i++) expect(asks[i]).toBeGreaterThan(asks[i - 1]);
+  });
+});
+
 describe("reach", () => {
   it("prefers real views over follower-based estimates", () => {
     const withViews = calculateRate(deal({ views: 20_000 }));
