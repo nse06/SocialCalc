@@ -16,7 +16,7 @@ async function settledAsk(page: Page): Promise<number> {
 }
 
 /** Scenario A answers: 10K Instagram followers, 3% engagement, Reel, standard effort, no usage. */
-async function completeInstagramReel(page: Page) {
+async function completeInstagramReel(page: Page, currentRate?: string) {
   await page.goto("/calculator");
   await page.getByRole("radio", { name: "Instagram" }).click();
   await page.getByRole("radio", { name: /^Reel/ }).click();
@@ -29,6 +29,7 @@ async function completeInstagramReel(page: Page) {
   await page.getByRole("radio", { name: "General / Lifestyle" }).click();
   await page.getByRole("radio", { name: "Mostly US / Canada" }).click();
   await page.getByRole("radio", { name: /^No — only posted/ }).click();
+  if (currentRate) await page.getByRole("textbox", { name: /What do you usually charge/ }).fill(currentRate);
   await page.getByRole("button", { name: "See my rate" }).click();
   await expect(page.getByRole("heading", { name: "Your estimated rate" })).toBeVisible();
 }
@@ -81,6 +82,16 @@ test.describe("calculator", () => {
     await page.getByRole("button", { name: "Compare" }).click();
     await expect(page.getByRole("heading", { name: "You may be undercharging." })).toBeVisible();
     await expect(page.getByText("You currently charge $100.")).toBeVisible();
+  });
+
+  test("E: a current rate entered in the flow is compared right under the result", async ({ page }) => {
+    await completeInstagramReel(page, "100");
+    const verdict = page.getByRole("heading", { name: "You may be undercharging." });
+    await expect(verdict).toBeVisible();
+    // Shown before the breakdown, not buried below it.
+    const verdictTop = (await verdict.boundingBox())?.y ?? 0;
+    const breakdownTop = (await page.locator("#breakdown").boundingBox())?.y ?? 0;
+    expect(verdictTop).toBeLessThan(breakdownTop);
   });
 
   test("UGC skips the audience questions", async ({ page }) => {

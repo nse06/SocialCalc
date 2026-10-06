@@ -86,6 +86,19 @@ export function Results({ draft, origin, source, onChange, onEditAnswers, onStar
     );
   }
 
+  // A verdict on a rate the creator already gave belongs up top; an empty prompt doesn't.
+  // Decided once, so the card never jumps away while someone is typing into it.
+  const comparisonFirst = Boolean(original.draft.currentRate);
+  const comparison = FEATURES.rateComparison ? (
+    <RateComparison
+      result={result}
+      onCurrentRateChange={(currentRate) => {
+        onChange({ currentRate });
+        track("result_adjusted", { field: "current_rate", via: "control" });
+      }}
+    />
+  ) : null;
+
   return (
     <div className="grid gap-4 sm:gap-5">
       <RateCard result={result} originalAsk={original.ask} animateFromZero={origin === "flow"} onEditAnswers={onEditAnswers} />
@@ -105,15 +118,7 @@ export function Results({ draft, origin, source, onChange, onEditAnswers, onStar
         </Button>
       </div>
 
-      {FEATURES.rateComparison ? (
-        <RateComparison
-          result={result}
-          onCurrentRateChange={(currentRate) => {
-            onChange({ currentRate });
-            track("result_adjusted", { field: "current_rate", via: "control" });
-          }}
-        />
-      ) : null}
+      {comparisonFirst ? comparison : null}
 
       <Breakdown result={result} />
 
@@ -122,6 +127,8 @@ export function Results({ draft, origin, source, onChange, onEditAnswers, onStar
       ) : null}
 
       <Strategy result={result} />
+
+      {comparisonFirst ? null : comparison}
 
       {FEATURES.quoteGenerator ? <QuoteGenerator result={result} generated={quoteOpen} onGenerate={generateQuote} /> : null}
 
