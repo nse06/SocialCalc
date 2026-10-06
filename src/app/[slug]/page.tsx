@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { AdSlot } from "@/components/ads/ad-slot";
 import { Calculator } from "@/components/calculator/calculator";
 import { NoScriptNotice } from "@/components/calculator/noscript-notice";
 import { CalculatorLinks } from "@/components/marketing/calculator-links";
@@ -90,6 +91,8 @@ export default async function LandingPageRoute({ params }: { params: Promise<{ s
           ))}
         </article>
 
+        <AdSlot placement="landingArticle" />
+
         {page.usageTable ? (
           <section>
             <h2 className="mb-4 text-2xl font-semibold tracking-tight sm:text-[1.75rem]">
@@ -120,6 +123,8 @@ export default async function LandingPageRoute({ params }: { params: Promise<{ s
         </section>
 
         <FaqList faqs={page.faqs} />
+
+        <AdSlot placement="landingFooter" />
       </div>
 
       <div className="mx-auto mt-20 max-w-6xl px-4 sm:px-6">

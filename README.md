@@ -59,11 +59,20 @@ update. Then run `npm test` (the acceptance scenarios A–F are in `src/lib/pric
 | `NEXT_PUBLIC_SITE_URL` | Production URL for canonical links, sitemap, OG tags. **Set this before launch.** |
 | `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` | Enables Plausible (cookie-less) analytics. Optional `NEXT_PUBLIC_PLAUSIBLE_SRC`. |
 | `NEXT_PUBLIC_ANALYTICS_ENDPOINT` | Alternatively, any endpoint that accepts JSON beacons. |
+| `NEXT_PUBLIC_ADSTERRA_KEY_300X250` / `NEXT_PUBLIC_ADSTERRA_KEY_728X90` | Adsterra banner keys (phone / desktop). Ads stay off until set. Optional `NEXT_PUBLIC_ADSTERRA_HOST` if your snippet's `invoke.js` host differs. |
 | `NEXT_PUBLIC_FEATURE_DEAL_PARSER` | `true` shows the "paste the brand's email" box (off by default). |
 | `NEXT_PUBLIC_DEAL_EXTRACTION_ENDPOINT` | Future: a serverless LLM extractor returning `ExtractedDealTerms`. |
 
 Tracked events: `calculator_started`, `platform_selected`, `content_type_selected`, `calculator_completed`,
 `result_viewed`, `result_adjusted`, `quote_generated`, `quote_copied`, `share_link_copied`, `deal_email_parsed`.
+
+## Ads
+
+Ads appear only on content pages (landing-page articles and the methodology page) — never inside the calculator,
+next to a result, in the quote, or as pop-ups. Each unit runs in a sandboxed frame without same-origin access, so
+ad scripts can't read the page or a creator's saved answers. Placements live in `src/lib/ads.ts`
+(`AD_PLACEMENTS`); the slot component is `src/components/ads/ad-slot.tsx`. After adding real keys, confirm ads
+render on a deployed page — if Adsterra refuses to serve inside a sandboxed frame, relax the `sandbox` attribute.
 
 ## Future AI: "Paste the brand's email"
 

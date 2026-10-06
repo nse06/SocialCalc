@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ADS_ENABLED } from "@/lib/ads";
 
 export const metadata: Metadata = {
   title: "Privacy",
@@ -26,6 +27,14 @@ export default function PrivacyPage() {
           as a calculation being completed or a quote being copied — with coarse details like the platform and an audience
           size bucket. We don&apos;t use cookies for this, and we can&apos;t identify you from it.
         </p>
+        {ADS_ENABLED ? (
+          <p>
+            <strong className="font-semibold text-ink">Advertising.</strong> Some content pages show ads from our
+            advertising partner, Adsterra, which may use cookies or similar technologies under its own privacy policy. Ads
+            run in an isolated frame: they can&apos;t read this site or your calculator answers, and they never appear
+            inside the calculator or your quote.
+          </p>
+        ) : null}
         <p>
           <strong className="font-semibold text-ink">Progress in your browser.</strong> While you&apos;re filling in the
           calculator, your answers are kept in this browser tab&apos;s session storage so you don&apos;t lose them if you

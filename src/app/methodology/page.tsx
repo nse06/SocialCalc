@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { AdSlot } from "@/components/ads/ad-slot";
 import { CtaBand } from "@/components/marketing/cta-band";
 import { UsageTable } from "@/components/marketing/usage-table";
 import {
@@ -225,6 +226,8 @@ export default function MethodologyPage() {
             rows={PRODUCTION_IDS.map((id) => [CFG.production[id].label, mult(CFG.production[id].multiplier)])}
           />
         </Section>
+
+        <AdSlot placement="methodology" />
 
         <Section id="terms" title="5. Deal terms">
           <p>
