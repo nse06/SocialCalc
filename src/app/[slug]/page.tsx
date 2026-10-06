@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Calculator } from "@/components/calculator/calculator";
+import { NoScriptNotice } from "@/components/calculator/noscript-notice";
 import { CalculatorLinks } from "@/components/marketing/calculator-links";
 import { FaqList } from "@/components/marketing/faq-list";
 import { JsonLd } from "@/components/marketing/json-ld";
@@ -58,6 +59,7 @@ export default async function LandingPageRoute({ params }: { params: Promise<{ s
       </section>
 
       <div className="mx-auto max-w-2xl px-4 sm:px-6">
+        <NoScriptNotice />
         <Calculator preset={page.preset} source={`landing:${page.slug}`} framed />
       </div>
 
