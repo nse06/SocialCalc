@@ -29,10 +29,10 @@ function RangeLine({ result }: { result: RateResult }) {
           style={{ left: pos(result[p.key]) }}
         />
       ))}
-      <span className="absolute -bottom-1 -translate-x-1/2 text-[11px] text-faint tabular-nums" style={{ left: pos(result.low) }}>
+      <span className="absolute -bottom-1 -translate-x-1/2 text-[11px] text-muted tabular-nums" style={{ left: pos(result.low) }}>
         {formatMoney(result.low)}
       </span>
-      <span className="absolute -bottom-1 -translate-x-1/2 text-[11px] text-faint tabular-nums" style={{ left: pos(result.high) }}>
+      <span className="absolute -bottom-1 -translate-x-1/2 text-[11px] text-muted tabular-nums" style={{ left: pos(result.high) }}>
         {formatMoney(result.high)}
       </span>
     </div>

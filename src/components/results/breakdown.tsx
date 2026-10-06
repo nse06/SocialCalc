@@ -84,7 +84,7 @@ function LineAmount({ line }: { line: BreakdownLine }) {
     return <span className="font-semibold text-ink tabular-nums">{formatMoney(amount)}</span>;
   }
   return (
-    <span className={cn("font-semibold tabular-nums", line.active ? "text-ink" : "text-faint")}>
+    <span className={cn("font-semibold tabular-nums", line.active ? "text-ink" : "text-muted")}>
       {formatSignedMoney(amount)}
     </span>
   );
@@ -127,7 +127,7 @@ export function Breakdown({ result }: { result: RateResult }) {
           if (!lines.length) return null;
           return (
             <div key={group.kind}>
-              <h3 className="mb-1 text-[12px] font-semibold tracking-[0.08em] text-faint uppercase">{group.title}</h3>
+              <h3 className="mb-1 text-[12px] font-semibold tracking-[0.08em] text-muted uppercase">{group.title}</h3>
               <ul className="divide-y divide-line">
                 {lines.map((line) => (
                   <li key={line.id} className="flex items-start gap-3 py-3">

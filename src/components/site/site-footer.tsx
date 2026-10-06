@@ -24,7 +24,7 @@ export function SiteFooter() {
         </div>
         <div className="grid gap-8 sm:grid-cols-[2fr_1fr]">
           <div>
-            <h2 className="text-[12px] font-semibold tracking-[0.08em] text-faint uppercase">Calculators</h2>
+            <h2 className="text-[12px] font-semibold tracking-[0.08em] text-muted uppercase">Calculators</h2>
             <ul className="mt-3 grid gap-x-6 gap-y-2 text-sm sm:grid-cols-2">
               {LANDING_PAGES.map((page) => (
                 <li key={page.slug}>
@@ -36,7 +36,7 @@ export function SiteFooter() {
             </ul>
           </div>
           <div>
-            <h2 className="text-[12px] font-semibold tracking-[0.08em] text-faint uppercase">Learn</h2>
+            <h2 className="text-[12px] font-semibold tracking-[0.08em] text-muted uppercase">Learn</h2>
             <ul className="mt-3 grid gap-2 text-sm">
               <li>
                 <Link href="/methodology" className="text-ink-soft transition-colors hover:text-ink">

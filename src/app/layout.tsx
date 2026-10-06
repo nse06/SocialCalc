@@ -27,7 +27,6 @@ export const metadata: Metadata = {
     title: "How much should you charge for a brand deal?",
     description: SITE.description,
   },
-  alternates: { canonical: "/" },
 };
 
 export const viewport: Viewport = {

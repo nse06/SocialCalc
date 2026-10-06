@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { CalculatorLinks } from "@/components/marketing/calculator-links";
 import { CtaBand } from "@/components/marketing/cta-band";
 import { FaqList } from "@/components/marketing/faq-list";
@@ -5,6 +6,10 @@ import { FactorGrid, FlowVisual, Hero, ThreeQuestions, UsageExample } from "@/co
 import { JsonLd } from "@/components/marketing/json-ld";
 import { HOME_FAQS } from "@/lib/content/faqs";
 import { SITE, absoluteUrl } from "@/lib/site";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function HomePage() {
   return (

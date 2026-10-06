@@ -12,6 +12,7 @@ pricing: the engine is deterministic code that runs in the browser.
 npm install
 npm run dev        # http://localhost:3000
 npm test           # engine, quote, URL-state and extraction tests (Vitest)
+npm run test:e2e   # builds, then runs Playwright on mobile + desktop against the static export
 npm run lint
 npm run typecheck
 npm run build      # static site in out/ — deploy to any static host/CDN
