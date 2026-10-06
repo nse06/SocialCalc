@@ -513,7 +513,7 @@ export const PRICING_CONFIG = {
       label: "Full buyout / broad commercial usage",
       shortLabel: "Full buyout",
       description: "Broad commercial use in any channel, including paid ads.",
-      rights: "full buyout / broad commercial usage",
+      rights: "full content buyout",
       fees: { "30d": 0.5, "90d": 0.8, "6m": 1.1, "12m": 1.5, perpetual: 2.5 },
     },
   },
@@ -532,7 +532,7 @@ export const PRICING_CONFIG = {
     normal: { label: "Normal timeline", description: "2+ weeks", fee: 0, phrase: "" },
     "1w": { label: "Within 1 week", description: "A tighter turnaround", fee: 0.1, phrase: "delivery within 1 week" },
     "3d": { label: "Within 3 days", description: "Rearranging your schedule", fee: 0.25, phrase: "delivery within 3 days" },
-    rush: { label: "Rush / ASAP", description: "48 hours or less", fee: 0.5, phrase: "rush delivery (48 hours or less)" },
+    rush: { label: "Rush / ASAP", description: "48 hours or less", fee: 0.5, phrase: "delivery within 48 hours" },
   },
 
   /** How wide the low–high range is (± share of the midpoint). */

@@ -103,7 +103,7 @@ export function Results({ draft, origin, source, onChange, onEditAnswers, onStar
     <div className="grid gap-4 sm:gap-5">
       <RateCard result={result} originalAsk={original.ask} animateFromZero={origin === "flow"} onEditAnswers={onEditAnswers} />
 
-      <div className="grid grid-cols-2 gap-2.5">
+      <div className="grid gap-2.5 min-[360px]:grid-cols-2">
         <Button variant="accent" size="lg" className="px-4" onClick={generateQuote}>
           <FileText size={18} />
           {FEATURES.quoteGenerator ? "Generate my quote" : "See breakdown"}
