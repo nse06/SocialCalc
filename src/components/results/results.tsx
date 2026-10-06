@@ -3,8 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { CopyButton } from "@/components/ui/copy-button";
-import { ArrowRight, FileText, LinkIcon, Pencil, Restart } from "@/components/ui/icons";
+import { ArrowRight, FileText, Pencil, Restart } from "@/components/ui/icons";
 import { priceBucket, track } from "@/lib/analytics";
 import { FEATURES } from "@/lib/features";
 import { type CalculatorDraft, draftToDeal } from "@/lib/pricing/draft";
@@ -15,6 +14,7 @@ import { EstimateNotes } from "./estimate-notes";
 import { QuoteGenerator } from "./quote-generator";
 import { RateCard } from "./rate-card";
 import { RateComparison } from "./rate-comparison";
+import { ShareResult } from "./share-result";
 import { Strategy } from "./strategy";
 
 interface ResultsProps {
@@ -143,18 +143,7 @@ export function Results({ draft, origin, source, onChange, onEditAnswers, onStar
           <Restart size={16} />
           Start over
         </Button>
-        {FEATURES.shareLink ? (
-          <CopyButton
-            variant="ghost"
-            size="md"
-            icon={<LinkIcon size={16} />}
-            copiedLabel="Link copied"
-            getText={() => window.location.href}
-            onCopied={() => track("share_link_copied", { platform: result.deal.platform })}
-          >
-            Copy link to this result
-          </CopyButton>
-        ) : null}
+        {FEATURES.shareLink ? <ShareResult result={result} /> : null}
       </div>
       <p className="text-center text-sm text-muted">
         Curious how this works?{" "}
