@@ -356,7 +356,7 @@ export function ThreeQuestions() {
           <li key={item.q} className="rounded-[24px] border border-line bg-surface p-6">
             <div className="flex items-center justify-between">
               <span className="flex size-10 items-center justify-center rounded-xl bg-accent-soft text-accent">{item.icon}</span>
-              <span className="text-[13px] font-semibold text-faint tabular-nums">0{i + 1}</span>
+              <span className="text-[13px] font-semibold text-muted tabular-nums">0{i + 1}</span>
             </div>
             <h3 className="mt-5 text-xl font-semibold tracking-tight">{item.q}</h3>
             <p className="mt-2 text-[15px] leading-relaxed text-muted">{item.a}</p>

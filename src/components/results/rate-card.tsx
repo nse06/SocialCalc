@@ -100,7 +100,7 @@ export function RateCard({ result, originalAsk, animateFromZero, onEditAnswers }
           </span>
           {confidence.label}
         </div>
-        <p className="text-[12px] font-medium tracking-wide text-white/40">{SITE.shortName}</p>
+        <p className="text-[12px] font-medium tracking-wide text-night-muted">{SITE.shortName}</p>
       </div>
       <p className="mt-3 text-[13px] leading-snug text-night-muted">
         This is a negotiation starting point, not a guaranteed market rate.
