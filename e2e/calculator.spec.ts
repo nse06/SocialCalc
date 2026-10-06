@@ -148,6 +148,22 @@ test.describe("calculator", () => {
     await expect(page.getByRole("textbox", { name: "Saves" })).toHaveCount(0);
   });
 
+  test("works with the keyboard alone", async ({ page }) => {
+    await page.goto("/calculator");
+    await page.getByRole("radio", { name: "Instagram" }).focus();
+    await page.keyboard.press("ArrowRight");
+    const tiktok = page.getByRole("radio", { name: "TikTok" });
+    await expect(tiktok).toBeFocused();
+    await page.keyboard.press("Enter");
+    await expect(tiktok).toHaveAttribute("aria-checked", "true");
+    // Keyboard selection never auto-advances; Continue does.
+    await expect(page.getByRole("heading", { name: "Where will the content run?" })).toBeVisible();
+    await page.getByRole("button", { name: "Continue" }).focus();
+    await page.keyboard.press("Enter");
+    // Focus moves to the new question so screen readers announce it.
+    await expect(page.getByRole("heading", { name: "What are you creating?" })).toBeFocused();
+  });
+
   test("validates audience input instead of crashing", async ({ page }) => {
     await page.goto("/calculator?p=instagram&c=reel&pr=standard");
     await page.getByRole("button", { name: "Continue" }).click();

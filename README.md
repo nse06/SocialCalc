@@ -12,11 +12,15 @@ pricing: the engine is deterministic code that runs in the browser.
 npm install
 npm run dev        # http://localhost:3000
 npm test           # engine, quote, URL-state and extraction tests (Vitest)
-npm run test:e2e   # builds, then runs Playwright on mobile + desktop against the static export
+npm run test:e2e   # builds, then runs Playwright + axe on mobile and desktop against the static export
 npm run lint
 npm run typecheck
 npm run build      # static site in out/ — deploy to any static host/CDN
 ```
+
+The E2E suite (`e2e/`) covers the full flow and quote copy, usage and current-rate scenarios, UGC, shared
+links, browser back, keyboard-only use, input validation, landing-page presets, and WCAG 2.1 AA checks with axe.
+CI (`.github/workflows/ci.yml`) runs lint, unit tests, and the E2E suite on pull requests.
 
 ## Deploy
 
@@ -59,7 +63,7 @@ update. Then run `npm test` (the acceptance scenarios A–F are in `src/lib/pric
 | `NEXT_PUBLIC_DEAL_EXTRACTION_ENDPOINT` | Future: a serverless LLM extractor returning `ExtractedDealTerms`. |
 
 Tracked events: `calculator_started`, `platform_selected`, `content_type_selected`, `calculator_completed`,
-`result_viewed`, `result_adjusted`, `quote_generated`, `quote_copied`, `share_link_copied`.
+`result_viewed`, `result_adjusted`, `quote_generated`, `quote_copied`, `share_link_copied`, `deal_email_parsed`.
 
 ## Future AI: "Paste the brand's email"
 
