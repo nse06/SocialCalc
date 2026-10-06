@@ -4,13 +4,13 @@ import { notFound } from "next/navigation";
 import { AdSlot } from "@/components/ads/ad-slot";
 import { Calculator } from "@/components/calculator/calculator";
 import { NoScriptNotice } from "@/components/calculator/noscript-notice";
+import { Breadcrumbs } from "@/components/marketing/breadcrumbs";
 import { CalculatorLinks } from "@/components/marketing/calculator-links";
+import { ExclusivityTable } from "@/components/marketing/exclusivity-table";
 import { FaqList } from "@/components/marketing/faq-list";
-import { JsonLd } from "@/components/marketing/json-ld";
 import { UsageTable } from "@/components/marketing/usage-table";
 import { ArrowRight } from "@/components/ui/icons";
 import { LANDING_PAGES, getLandingPage } from "@/lib/content/landing-pages";
-import { absoluteUrl } from "@/lib/site";
 
 export const dynamicParams = false;
 
@@ -50,7 +50,15 @@ export default async function LandingPageRoute({ params }: { params: Promise<{ s
           aria-hidden="true"
           className="absolute inset-x-0 -top-40 -z-10 h-[560px] bg-[radial-gradient(55%_50%_at_50%_0%,rgb(124_92_255/0.14),transparent)]"
         />
-        <div className="mx-auto max-w-3xl px-4 pt-10 pb-8 text-center sm:px-6 sm:pt-16">
+        <div className="mx-auto max-w-3xl px-4 pt-6 pb-8 text-center sm:px-6 sm:pt-10">
+          <div className="mb-8 flex justify-center sm:mb-10">
+            <Breadcrumbs
+              items={[
+                { name: "Calculators", href: "/calculators" },
+                { name: page.linkLabel, href: `/${page.slug}` },
+              ]}
+            />
+          </div>
           <p className="text-[13px] font-semibold tracking-[0.08em] text-accent uppercase">{page.eyebrow}</p>
           <h1 className="mt-3 text-[2.2rem] leading-[1.06] font-semibold tracking-[-0.035em] text-balance sm:text-5xl">
             {page.h1}
@@ -102,6 +110,13 @@ export default async function LandingPageRoute({ params }: { params: Promise<{ s
           </section>
         ) : null}
 
+        {page.exclusivityTable ? (
+          <section>
+            <h2 className="mb-4 text-2xl font-semibold tracking-tight sm:text-[1.75rem]">How this calculator prices exclusivity</h2>
+            <ExclusivityTable />
+          </section>
+        ) : null}
+
         <section className="rounded-[24px] border border-line bg-surface p-6 shadow-card sm:p-8">
           <h2 className="text-xl font-semibold tracking-tight">How this calculator works</h2>
           <ol className="mt-4 grid gap-3">
@@ -131,16 +146,6 @@ export default async function LandingPageRoute({ params }: { params: Promise<{ s
         <CalculatorLinks slugs={page.related} title="Related calculators" />
       </div>
 
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          itemListElement: [
-            { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
-            { "@type": "ListItem", position: 2, name: page.linkLabel, item: absoluteUrl(`/${page.slug}`) },
-          ],
-        }}
-      />
     </>
   );
 }

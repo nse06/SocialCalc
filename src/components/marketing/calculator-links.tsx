@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { ArrowRight } from "@/components/ui/icons";
-import { LANDING_PAGES, type LandingPage } from "@/lib/content/landing-pages";
+import { LANDING_PAGES, getLinkTarget } from "@/lib/content/landing-pages";
 
 export function CalculatorLinks({ slugs, title = "More calculators" }: { slugs?: string[]; title?: string }) {
   const pages = slugs
-    ? slugs.map((s) => LANDING_PAGES.find((p) => p.slug === s)).filter((p): p is LandingPage => Boolean(p))
+    ? slugs.map(getLinkTarget).filter((p): p is NonNullable<ReturnType<typeof getLinkTarget>> => Boolean(p))
     : LANDING_PAGES;
   return (
     <section aria-labelledby="calculator-links-heading">

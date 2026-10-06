@@ -175,13 +175,41 @@ test.describe("calculator", () => {
 });
 
 test.describe("content pages", () => {
+  test.use({ permissions: ["clipboard-read", "clipboard-write"] });
+
+  test("email templates copy to the clipboard", async ({ page }) => {
+    await page.goto("/brand-deal-email-templates");
+    await page.locator("#counter").getByRole("button", { name: "Copy template" }).click();
+    const text = await page.evaluate(() => navigator.clipboard.readText());
+    expect(text).toContain("If [$their budget] is firm");
+  });
+
+  test("the hub links every calculator", async ({ page }) => {
+    await page.goto("/calculators");
+    const main = page.getByRole("main");
+    await expect(main.getByRole("link", { name: /Exclusivity fee calculator/ })).toBeVisible();
+    await expect(main.getByRole("link", { name: /YouTube Shorts sponsorship calculator/ })).toBeVisible();
+    await expect(page.getByRole("navigation", { name: "Breadcrumb" })).toContainText("Calculators");
+  });
+
   test("landing pages start the calculator with their preset", async ({ page }) => {
     await page.goto("/instagram-reel-price-calculator");
     await expect(page.getByRole("heading", { level: 1 })).toContainText("sponsored Reel");
     await expect(page.getByRole("heading", { name: "How much work is involved?" })).toBeVisible();
   });
 
-  for (const path of ["/", "/calculator", "/methodology", "/privacy", "/ugc-rate-calculator", "/whitelisting-calculator"]) {
+  for (const path of [
+    "/",
+    "/calculator",
+    "/calculators",
+    "/methodology",
+    "/privacy",
+    "/ugc-rate-calculator",
+    "/whitelisting-calculator",
+    "/exclusivity-fee-calculator",
+    "/instagram-story-price-calculator",
+    "/brand-deal-email-templates",
+  ]) {
     test(`${path} renders without errors or horizontal scroll`, async ({ page }) => {
       const errors: string[] = [];
       page.on("pageerror", (e) => errors.push(e.message));

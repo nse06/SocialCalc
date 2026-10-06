@@ -19,7 +19,8 @@ export type AnalyticsEvent =
   | "quote_generated"
   | "quote_copied"
   | "share_link_copied"
-  | "deal_email_parsed";
+  | "deal_email_parsed"
+  | "template_copied";
 
 export type AnalyticsProps = Record<string, string | number | boolean | null | undefined>;
 

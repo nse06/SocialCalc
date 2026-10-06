@@ -15,10 +15,16 @@ export function SiteHeader() {
             How it works
           </Link>
           <Link
-            href="/usage-rights-calculator"
+            href="/calculators"
             className="hidden rounded-full px-3 py-2 text-sm font-medium text-ink-soft transition-colors hover:bg-subtle hover:text-ink md:block"
           >
-            Usage rights
+            Calculators
+          </Link>
+          <Link
+            href="/brand-deal-email-templates"
+            className="hidden rounded-full px-3 py-2 text-sm font-medium text-ink-soft transition-colors hover:bg-subtle hover:text-ink lg:block"
+          >
+            Email templates
           </Link>
           <HeaderCta />
         </nav>

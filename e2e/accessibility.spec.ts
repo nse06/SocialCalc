@@ -8,7 +8,16 @@ async function audit(page: Page) {
 }
 
 test.describe("accessibility", () => {
-  for (const path of ["/", "/calculator", "/methodology", "/tiktok-rate-calculator", "/privacy"]) {
+  for (const path of [
+    "/",
+    "/calculator",
+    "/calculators",
+    "/methodology",
+    "/tiktok-rate-calculator",
+    "/exclusivity-fee-calculator",
+    "/brand-deal-email-templates",
+    "/privacy",
+  ]) {
     test(`${path} has no WCAG A/AA violations`, async ({ page }) => {
       await page.goto(path);
       await audit(page);

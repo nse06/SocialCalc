@@ -39,6 +39,16 @@ export function SiteFooter() {
             <h2 className="text-[12px] font-semibold tracking-[0.08em] text-muted uppercase">Learn</h2>
             <ul className="mt-3 grid gap-2 text-sm">
               <li>
+                <Link href="/calculators" className="text-ink-soft transition-colors hover:text-ink">
+                  All calculators
+                </Link>
+              </li>
+              <li>
+                <Link href="/brand-deal-email-templates" className="text-ink-soft transition-colors hover:text-ink">
+                  Brand deal email templates
+                </Link>
+              </li>
+              <li>
                 <Link href="/methodology" className="text-ink-soft transition-colors hover:text-ink">
                   Methodology
                 </Link>

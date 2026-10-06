@@ -34,6 +34,8 @@ export interface LandingPage {
   sections: LandingSection[];
   /** Render the usage-fee table from the pricing config. */
   usageTable?: "all" | "whitelisting";
+  /** Render the exclusivity-fee table from the pricing config. */
+  exclusivityTable?: boolean;
   faqs: Faq[];
   related: string[];
 }
@@ -97,7 +99,7 @@ export const LANDING_PAGES: LandingPage[] = [
         a: "Yes. Partnership ads let a brand run paid ads through your handle. That's valuable to them and uses your reputation, so price it as a separate fee for a defined period.",
       },
     ],
-    related: ["instagram-reel-price-calculator", "whitelisting-calculator", "usage-rights-calculator", "tiktok-rate-calculator"],
+    related: ["instagram-reel-price-calculator", "instagram-story-price-calculator", "whitelisting-calculator", "usage-rights-calculator"],
   },
   {
     slug: "tiktok-rate-calculator",
@@ -204,7 +206,7 @@ export const LANDING_PAGES: LandingPage[] = [
         a: "Usually. Advertisers tend to pay more to reach audiences in categories like finance, B2B, and technology, so those niches start from a higher planning band.",
       },
     ],
-    related: ["influencer-rate-calculator", "brand-deal-calculator", "usage-rights-calculator", "instagram-rate-calculator"],
+    related: ["youtube-shorts-sponsorship-calculator", "brand-deal-calculator", "usage-rights-calculator", "influencer-rate-calculator"],
   },
   {
     slug: "influencer-rate-calculator",
@@ -260,7 +262,7 @@ export const LANDING_PAGES: LandingPage[] = [
         a: "From a published set of planning assumptions — price per 1,000 views by format, creation fees, and adjustment ranges. They're all listed on the methodology page, and they're versioned so changes are deliberate.",
       },
     ],
-    related: ["brand-deal-calculator", "instagram-rate-calculator", "tiktok-rate-calculator", "youtube-rate-calculator"],
+    related: ["micro-influencer-rate-calculator", "brand-deal-calculator", "instagram-rate-calculator", "tiktok-rate-calculator"],
   },
   {
     slug: "ugc-rate-calculator",
@@ -449,7 +451,7 @@ export const LANDING_PAGES: LandingPage[] = [
         a: "No. It's a planning tool to help you negotiate with confidence. For contracts, especially large or long-term ones, consider having a professional review the terms.",
       },
     ],
-    related: ["influencer-rate-calculator", "usage-rights-calculator", "tiktok-sponsorship-calculator", "youtube-rate-calculator"],
+    related: ["brand-deal-email-templates", "exclusivity-fee-calculator", "usage-rights-calculator", "influencer-rate-calculator"],
   },
   {
     slug: "usage-rights-calculator",
@@ -499,7 +501,7 @@ export const LANDING_PAGES: LandingPage[] = [
         a: "Forever. Perpetual usage means the brand can use your content indefinitely. Many creators avoid it or only accept it at a significant premium.",
       },
     ],
-    related: ["whitelisting-calculator", "ugc-rate-calculator", "brand-deal-calculator", "instagram-rate-calculator"],
+    related: ["whitelisting-calculator", "exclusivity-fee-calculator", "ugc-rate-calculator", "brand-deal-calculator"],
   },
   {
     slug: "whitelisting-calculator",
@@ -550,8 +552,210 @@ export const LANDING_PAGES: LandingPage[] = [
     ],
     related: ["usage-rights-calculator", "tiktok-sponsorship-calculator", "instagram-reel-price-calculator", "ugc-rate-calculator"],
   },
+  {
+    slug: "instagram-story-price-calculator",
+    linkLabel: "Instagram Story price calculator",
+    blurb: "What to charge for sponsored Stories, from your typical Story views.",
+    metaTitle: "Instagram Story Price Calculator: What to Charge for Sponsored Stories",
+    metaDescription:
+      "How much should you charge for a sponsored Instagram Story? Price a Story set from your typical Story views, engagement, and the brand's terms.",
+    eyebrow: "Instagram Story price calculator",
+    h1: "How much should you charge for an Instagram Story?",
+    intro:
+      "Stories reach fewer people than Reels and disappear after a day — but they're quick to make, great for links, and easy to bundle. Price a sponsored Story set from your typical Story views.",
+    preset: { platform: "instagram", contentType: "story" },
+    sections: [
+      {
+        heading: "Price a set, not a single frame",
+        paragraphs: [
+          "Brands usually ask for a short sequence — say, three frames with a link sticker. This calculator prices a set of up to three frames as one Story deliverable. Longer sequences or several days of Stories are extra deliverables.",
+        ],
+      },
+      {
+        heading: "Use Story views, not followers",
+        paragraphs: [
+          "Story views are usually a small fraction of your followers, so pricing Stories from follower count overshoots. Check the views on your last ten Stories in Insights and use a typical number.",
+        ],
+      },
+      {
+        heading: "When Stories are worth more",
+        bullets: [
+          { title: "Link clicks", text: "If your Stories reliably drive taps on links, mention it — it's what many brands are buying." },
+          { title: "Bundles", text: "Stories pair well with a Reel or post. Add them as extra deliverables on the same quote." },
+          { title: "Usage", text: "If the brand wants to reuse Story footage in ads, that's paid usage and should be priced separately." },
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "Should Stories cost less than a Reel?",
+        a: "Usually, yes — they reach fewer people and take less work. In this calculator a Story set starts from a lower reach estimate and a lower creation fee than a Reel.",
+      },
+      {
+        q: "Do link stickers change the price?",
+        a: "They change what the brand gets. If your Stories drive meaningful link taps, use that as a reason to quote toward the top of your range.",
+      },
+      {
+        q: "What if the brand wants Stories every day for a week?",
+        a: "Price each day's set as a deliverable. The calculator discounts extra deliverables slightly, since a bigger commitment usually earns a small bundle price.",
+      },
+    ],
+    related: ["instagram-rate-calculator", "instagram-reel-price-calculator", "usage-rights-calculator", "brand-deal-email-templates"],
+  },
+  {
+    slug: "youtube-shorts-sponsorship-calculator",
+    linkLabel: "YouTube Shorts sponsorship calculator",
+    blurb: "Price a sponsored YouTube Short from the views your Shorts actually get.",
+    metaTitle: "YouTube Shorts Sponsorship Calculator: What to Charge for a Sponsored Short",
+    metaDescription:
+      "How much should you charge for a sponsored YouTube Short? Get a fair price range from your typical Shorts views, engagement, and the deal terms.",
+    eyebrow: "YouTube Shorts sponsorship calculator",
+    h1: "How much should you charge for a sponsored YouTube Short?",
+    intro:
+      "Shorts are priced more like Reels and TikToks than long-form YouTube videos. Price yours from your typical Shorts views — and add usage if the brand wants to cut it into ads.",
+    preset: { platform: "youtube", contentType: "short" },
+    sections: [
+      {
+        heading: "Shorts views behave differently",
+        paragraphs: [
+          "A Short can reach far beyond your subscribers — or stall. Look at the views on your last ten Shorts in YouTube Studio and use a typical number, not your best one.",
+          "Keep Shorts and long-form separate: a channel's long-form views are often a very different number from its Shorts views.",
+        ],
+      },
+      {
+        heading: "Shorts vs. integrations",
+        paragraphs: [
+          "An integration buys a segment inside a long-form video that people chose to watch. A Short buys a quick, vertical moment in a feed. Both have value; they just aren't priced the same way, which is why the calculator treats them as different formats.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "Should I price a Short like a TikTok?",
+        a: "They're similar formats, so the planning assumptions are close. Your actual views on each platform matter more than the platform itself.",
+      },
+      {
+        q: "Can I bundle a Short with an integration?",
+        a: "Yes. Quote them as separate lines: the integration priced from long-form views, the Short from Shorts views. Bundles make it easy for brands to say yes.",
+      },
+      {
+        q: "What if the brand wants to reuse my Short as an ad?",
+        a: "That's paid usage. Add it as its own line on your quote with a clear time limit, like 30 or 90 days.",
+      },
+    ],
+    related: ["youtube-rate-calculator", "tiktok-rate-calculator", "usage-rights-calculator", "brand-deal-email-templates"],
+  },
+  {
+    slug: "micro-influencer-rate-calculator",
+    linkLabel: "Micro-influencer rate calculator",
+    blurb: "Fair rates for 10K–100K creators, priced on reach and engagement.",
+    metaTitle: "Micro-Influencer Rate Calculator: What Should a 10K–100K Creator Charge?",
+    metaDescription:
+      "What should a micro-influencer charge? Get a fair starting price for 10K–100K-follower creators from your real views, engagement, and the deal terms.",
+    eyebrow: "Micro-influencer rate calculator",
+    h1: "What should a micro-influencer charge?",
+    intro:
+      "Micro-influencers — roughly 10,000 to 100,000 followers — often have more engaged audiences than bigger accounts. Here's how to price that fairly, without underselling yourself.",
+    preset: {},
+    sections: [
+      {
+        heading: "Engagement is your leverage",
+        paragraphs: [
+          "Smaller accounts tend to have higher engagement, and brands know it. This calculator compares your engagement with what's typical for your platform and account size, so strong engagement moves your price up.",
+        ],
+      },
+      {
+        heading: "Your work still costs money",
+        paragraphs: [
+          "Even with a modest audience, a sponsored post takes real time: ideas, filming, editing, revisions. That's why every estimate includes a content creation fee on top of your audience value — you're never priced at a few dollars per thousand views.",
+        ],
+      },
+      {
+        heading: "Where micro-influencers lose the most money",
+        bullets: [
+          { title: "Free usage", text: "Saying yes to “we'll also use it in ads” without a usage fee." },
+          { title: "Open-ended exclusivity", text: "Agreeing not to work with competitors with no end date or extra pay." },
+          { title: "Gifted deals with paid-deal demands", text: "Product-only offers that still expect deadlines, scripts, and usage." },
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "How much should a creator with 10K followers charge?",
+        a: "It depends much more on views, engagement, format, and terms than on the follower count. Run the calculator with your real numbers — a 10K account with strong views can deserve far more than a rule of thumb suggests.",
+      },
+      {
+        q: "Should micro-influencers accept gifted collaborations?",
+        a: "Sometimes — for products you'd genuinely use, with no strings attached. If the brand wants specific deliverables, deadlines, or usage rights, it's paid work.",
+      },
+      {
+        q: "Is it OK to charge more than my last deal?",
+        a: "Yes. Rates should rise as your audience, results, and portfolio grow. Quoting a higher number to the next brand is completely normal.",
+      },
+    ],
+    related: ["influencer-rate-calculator", "instagram-rate-calculator", "tiktok-rate-calculator", "brand-deal-email-templates"],
+  },
+  {
+    slug: "exclusivity-fee-calculator",
+    linkLabel: "Exclusivity fee calculator",
+    blurb: "How much to charge when a brand asks you not to work with competitors.",
+    metaTitle: "Exclusivity Fee Calculator: How Much to Charge for Influencer Exclusivity",
+    metaDescription:
+      "A brand wants exclusivity? Price the deals you'll have to turn down. See how exclusivity length changes your fee and generate a quote.",
+    eyebrow: "Exclusivity fee calculator",
+    h1: "How much should you charge for exclusivity?",
+    intro:
+      "When a brand asks you not to work with competitors, you're giving up future income. Exclusivity should be priced as its own line — and it should have an end date.",
+    preset: { exclusivity: "30d" },
+    exclusivityTable: true,
+    sections: [
+      {
+        heading: "What you're really selling",
+        paragraphs: [
+          "Exclusivity is an opportunity cost: every week you can't work with a competitor is a week of deals you might turn down. The longer the period and the busier your category, the more it's worth.",
+        ],
+      },
+      {
+        heading: "Read the exclusivity clause carefully",
+        bullets: [
+          { title: "Category", text: "“Competitors” should be specific — named brands or a narrow category, not “any beauty brand.”" },
+          { title: "Length", text: "Every exclusivity period needs an end date. Shorter periods are easier to price and accept." },
+          { title: "Start", text: "Agree whether it starts at signing or when the content goes live." },
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "Is exclusivity normal in brand deals?",
+        a: "It's common, especially in competitive categories. What's not fine is unpaid, open-ended exclusivity. Price it, limit it, and define the category.",
+      },
+      {
+        q: "Should I charge for exclusivity if I wasn't going to work with competitors anyway?",
+        a: "Yes. Exclusivity removes options you might have had, and brands value the guarantee. You can always lower the fee if it's a long-term partnership you want.",
+      },
+      {
+        q: "How does this calculator price exclusivity?",
+        a: "As a share of the content fee that grows with the length of the period — see the table on this page for the exact planning assumptions.",
+      },
+    ],
+    related: ["usage-rights-calculator", "brand-deal-calculator", "whitelisting-calculator", "brand-deal-email-templates"],
+  },
 ];
 
 export function getLandingPage(slug: string): LandingPage | undefined {
   return LANDING_PAGES.find((p) => p.slug === slug);
+}
+
+/** Non-calculator pages that link cards can point to (they have their own routes). */
+export const GUIDES: { slug: string; linkLabel: string; blurb: string }[] = [
+  {
+    slug: "brand-deal-email-templates",
+    linkLabel: "Brand deal email templates",
+    blurb: "Copy-ready replies for quoting, countering, and adding usage fees.",
+  },
+];
+
+/** Any linkable page by slug: calculators first, then guides. */
+export function getLinkTarget(slug: string): { slug: string; linkLabel: string; blurb: string } | undefined {
+  return LANDING_PAGES.find((p) => p.slug === slug) ?? GUIDES.find((g) => g.slug === slug);
 }
