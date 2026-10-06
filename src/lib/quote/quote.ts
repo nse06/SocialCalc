@@ -30,7 +30,7 @@ function lineStep(total: number): number {
   return 500;
 }
 
-export function contentLineLabel(result: RateResult): string {
+function contentLineLabel(result: RateResult): string {
   const { deal, content } = result;
   const name = deliverableName(content, deal.customLabel);
   const production =
@@ -40,26 +40,26 @@ export function contentLineLabel(result: RateResult): string {
   return deal.deliverables > 1 ? `${deal.deliverables} × ${name}${production}` : `${name}${production}`;
 }
 
-export function usageLineLabel(result: RateResult): string | null {
+function usageLineLabel(result: RateResult): string | null {
   const { usage, usageDuration } = result.deal;
   if (usage === "none") return null;
   const rights = CFG.usageTypes[usage].rights;
   return `${CFG.usageDurations[usageDuration].adjective} ${rights}`;
 }
 
-export function exclusivityLineLabel(result: RateResult): string | null {
+function exclusivityLineLabel(result: RateResult): string | null {
   const ex = CFG.exclusivity[result.deal.exclusivity];
   if (!("adjective" in ex)) return null;
   return `${ex.adjective} category exclusivity`;
 }
 
-export function rushLineLabel(result: RateResult): string | null {
+function rushLineLabel(result: RateResult): string | null {
   const t = CFG.timelines[result.deal.timeline];
   if (!t.fee) return null;
   return `Rush fee (${t.phrase})`;
 }
 
-export function resolveQuoteTotal(result: RateResult, basis: QuoteBasis, customTotal?: number | null): number {
+function resolveQuoteTotal(result: RateResult, basis: QuoteBasis, customTotal?: number | null): number {
   if (basis === "custom" && customTotal && Number.isFinite(customTotal) && customTotal > 0) {
     return Math.round(customTotal);
   }

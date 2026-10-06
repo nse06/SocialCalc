@@ -2,7 +2,6 @@ import type { PricingConfig } from "./config";
 
 export type PlatformId = keyof PricingConfig["platforms"];
 export type NicheId = keyof PricingConfig["niches"];
-export type NicheBandId = keyof PricingConfig["nicheBands"];
 export type LocationId = keyof PricingConfig["locations"];
 export type ProductionId = keyof PricingConfig["production"];
 export type UsageTypeId = keyof PricingConfig["usageTypes"];

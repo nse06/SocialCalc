@@ -13,7 +13,3 @@ export function roundPrice(value: number): number {
   const step = roundingStep(value);
   return Math.max(step, Math.round(value / step) * step);
 }
-
-export function roundTo(value: number, step: number): number {
-  return Math.round(value / step) * step;
-}

@@ -28,10 +28,6 @@ export const USAGE_DURATION_IDS = keysOf(PRICING_CONFIG.usageDurations) as Usage
 export const EXCLUSIVITY_IDS = keysOf(PRICING_CONFIG.exclusivity) as ExclusivityId[];
 export const TIMELINE_IDS = keysOf(PRICING_CONFIG.timelines) as TimelineId[];
 
-export function isPlatformId(value: unknown): value is PlatformId {
-  return typeof value === "string" && (PLATFORM_IDS as string[]).includes(value);
-}
-
 export function isOneOf<T extends string>(ids: readonly T[], value: unknown): value is T {
   return typeof value === "string" && (ids as readonly string[]).includes(value);
 }
@@ -47,11 +43,6 @@ export function getContentTypes(platform: PlatformId): readonly ContentTypeConfi
 export function getContentType(platform: PlatformId, id: string | null | undefined): ContentTypeConfig | undefined {
   if (!id) return undefined;
   return getContentTypes(platform).find((c) => c.id === id);
-}
-
-export function isUgcContent(platform: PlatformId | null, contentType: string | null | undefined): boolean {
-  if (!platform) return false;
-  return Boolean(getContentType(platform, contentType)?.ugc);
 }
 
 export function getSizeTier(followers: number): { id: SizeTierId; label: string; reachFactor: number; engagementBenchmarkFactor: number } {
