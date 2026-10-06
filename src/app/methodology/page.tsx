@@ -153,6 +153,8 @@ export default function MethodologyPage() {
             the work itself, so smaller creators aren&apos;t priced at nearly zero — the same logic that makes UGC a paid
             service. UGC is priced on the creation fee and usage only, because it isn&apos;t posted to your audience.
           </p>
+          <p>“Default reach” is the share of followers (subscribers on YouTube) we assume see a typical piece when you
+            don&apos;t enter your views, before the account-size adjustment above.</p>
           {PLATFORM_IDS.map((id) => {
             const platform = getPlatform(id);
             return (
@@ -165,7 +167,7 @@ export default function MethodologyPage() {
                     c.label,
                     c.ugc ? "—" : formatMoney(c.cpm),
                     formatMoney(c.creationFee),
-                    c.ugc ? "—" : `${Math.round(c.reachRate * 100)}% of ${platform.audienceNoun}`,
+                    c.ugc ? "—" : `${Math.round(c.reachRate * 100)}%`,
                   ])}
                 />
               </div>

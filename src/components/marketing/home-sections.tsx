@@ -173,7 +173,7 @@ export function FlowVisual() {
     },
   ];
   return (
-    <section className="mx-auto max-w-6xl px-4 sm:px-6" aria-labelledby="how-heading">
+    <section className="mx-auto w-full max-w-6xl px-4 sm:px-6" aria-labelledby="how-heading">
       <p className="text-[13px] font-semibold tracking-[0.08em] text-accent uppercase">How it works</p>
       <h2 id="how-heading" className="mt-2 max-w-2xl text-3xl leading-tight font-semibold tracking-tight text-balance sm:text-4xl">
         From your numbers to a quote you can send.
@@ -234,7 +234,7 @@ const FACTORS = [
 
 export function FactorGrid() {
   return (
-    <section className="mx-auto max-w-6xl px-4 sm:px-6" aria-labelledby="factors-heading">
+    <section className="mx-auto w-full max-w-6xl px-4 sm:px-6" aria-labelledby="factors-heading">
       <h2 id="factors-heading" className="max-w-2xl text-3xl leading-tight font-semibold tracking-tight text-balance sm:text-4xl">
         Your follower count isn&apos;t the whole story.
       </h2>
@@ -286,7 +286,7 @@ export function UsageExample() {
   const rows = USAGE_SCENARIOS.map((s) => ({ ...s, ask: calculateRate({ ...USAGE_EXAMPLE_BASE, ...s.patch }).ask }));
   const max = Math.max(...rows.map((r) => r.ask));
   return (
-    <section className="mx-auto max-w-6xl px-4 sm:px-6" aria-labelledby="usage-heading">
+    <section className="mx-auto w-full max-w-6xl px-4 sm:px-6" aria-labelledby="usage-heading">
       <div className="grid gap-10 rounded-[32px] border border-line bg-surface p-6 shadow-card sm:p-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
         <div>
           <p className="text-[13px] font-semibold tracking-[0.08em] text-accent uppercase">More rights = more money</p>
@@ -347,7 +347,7 @@ const QUESTIONS = [
 
 export function ThreeQuestions() {
   return (
-    <section className="mx-auto max-w-6xl px-4 sm:px-6" aria-labelledby="questions-heading">
+    <section className="mx-auto w-full max-w-6xl px-4 sm:px-6" aria-labelledby="questions-heading">
       <h2 id="questions-heading" className="max-w-2xl text-3xl leading-tight font-semibold tracking-tight text-balance sm:text-4xl">
         Three answers before you hit reply.
       </h2>

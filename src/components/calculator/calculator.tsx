@@ -404,7 +404,7 @@ export function Calculator({ preset, source, framed = false, className }: Calcul
           "sticky bottom-0 z-10 mt-8 border-t border-line pt-3 pb-safe backdrop-blur-md",
           framed ? "-mx-5 -mb-5 rounded-b-[28px] bg-surface/90 px-5" : "-mx-4 bg-canvas/90 px-4",
           "sm:static sm:mx-0 sm:mt-10 sm:border-0 sm:bg-transparent sm:p-0 sm:backdrop-blur-none",
-          isTapStep && !complete_ && "max-sm:hidden",
+          isTapStep && !complete_ && "hidden",
         )}
       >
         <Button

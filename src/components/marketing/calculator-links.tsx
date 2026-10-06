@@ -2,11 +2,6 @@ import Link from "next/link";
 import { ArrowRight } from "@/components/ui/icons";
 import { LANDING_PAGES, type LandingPage } from "@/lib/content/landing-pages";
 
-function firstSentence(text: string) {
-  const match = /^.*?[.!?](\s|$)/.exec(text);
-  return (match ? match[0] : text).trim();
-}
-
 export function CalculatorLinks({ slugs, title = "More calculators" }: { slugs?: string[]; title?: string }) {
   const pages = slugs
     ? slugs.map((s) => LANDING_PAGES.find((p) => p.slug === s)).filter((p): p is LandingPage => Boolean(p))
@@ -27,7 +22,7 @@ export function CalculatorLinks({ slugs, title = "More calculators" }: { slugs?:
                 {page.linkLabel}
                 <ArrowRight size={17} className="text-faint transition-transform group-hover:translate-x-0.5 group-hover:text-accent" />
               </span>
-              <span className="mt-1.5 text-[14px] leading-relaxed text-muted">{firstSentence(page.intro)}</span>
+              <span className="mt-1.5 text-[14px] leading-relaxed text-muted">{page.blurb}</span>
             </Link>
           </li>
         ))}

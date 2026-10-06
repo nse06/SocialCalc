@@ -23,6 +23,8 @@ export interface LandingPage {
   slug: string;
   /** Used in nav/footer links. */
   linkLabel: string;
+  /** One line for link cards. */
+  blurb: string;
   metaTitle: string;
   metaDescription: string;
   eyebrow: string;
@@ -40,6 +42,7 @@ export const LANDING_PAGES: LandingPage[] = [
   {
     slug: "instagram-rate-calculator",
     linkLabel: "Instagram rate calculator",
+    blurb: "Price sponsored Reels, posts, carousels, and Stories from your real reach.",
     metaTitle: "Instagram Rate Calculator: What to Charge for Sponsored Posts & Reels",
     metaDescription:
       "Free Instagram rate calculator. Get a fair starting price for sponsored Reels, posts, carousels, and Stories based on your reach, engagement, and the deal terms.",
@@ -99,6 +102,7 @@ export const LANDING_PAGES: LandingPage[] = [
   {
     slug: "tiktok-rate-calculator",
     linkLabel: "TikTok rate calculator",
+    blurb: "Price sponsored TikToks from your typical views, not your follower count.",
     metaTitle: "TikTok Rate Calculator: What to Charge for Sponsored TikToks",
     metaDescription:
       "Free TikTok rate calculator for creators. Price sponsored TikToks, UGC, and Spark Ads using your typical views, engagement, and the deal terms.",
@@ -151,6 +155,7 @@ export const LANDING_PAGES: LandingPage[] = [
   {
     slug: "youtube-rate-calculator",
     linkLabel: "YouTube sponsorship calculator",
+    blurb: "Price integrations, dedicated videos, and Shorts from your 30-day views.",
     metaTitle: "YouTube Sponsorship Calculator: What to Charge for Integrations",
     metaDescription:
       "Free YouTube sponsorship rate calculator. Estimate fair prices for integrations, dedicated videos, and Shorts from your typical views and the deal terms.",
@@ -204,6 +209,7 @@ export const LANDING_PAGES: LandingPage[] = [
   {
     slug: "influencer-rate-calculator",
     linkLabel: "Influencer rate calculator",
+    blurb: "A transparent starting rate for any platform, with every assumption shown.",
     metaTitle: "Influencer Rate Calculator: What Should You Charge Brands?",
     metaDescription:
       "A free, transparent influencer rate calculator. Get a fair price range for any platform, see exactly what drives it, and copy a ready-to-send quote.",
@@ -259,6 +265,7 @@ export const LANDING_PAGES: LandingPage[] = [
   {
     slug: "ugc-rate-calculator",
     linkLabel: "UGC rate calculator",
+    blurb: "Price UGC on the work and the usage rights — not your audience size.",
     metaTitle: "UGC Rate Calculator: How Much to Charge for UGC Videos",
     metaDescription:
       "Free UGC rate calculator. Price UGC videos by effort and usage rights — paid ads, whitelisting, and buyouts — and generate a quote for the brand.",
@@ -311,6 +318,7 @@ export const LANDING_PAGES: LandingPage[] = [
   {
     slug: "instagram-reel-price-calculator",
     linkLabel: "Instagram Reel price calculator",
+    blurb: "What to charge for a sponsored Reel, from plays, engagement, and effort.",
     metaTitle: "Instagram Reel Price Calculator: What to Charge for a Sponsored Reel",
     metaDescription:
       "How much should you charge for a sponsored Instagram Reel? Get a fair price range from your views and engagement, then copy a quote.",
@@ -356,6 +364,7 @@ export const LANDING_PAGES: LandingPage[] = [
   {
     slug: "tiktok-sponsorship-calculator",
     linkLabel: "TikTok sponsorship calculator",
+    blurb: "Price the whole TikTok deal: the video, Spark Ads, usage, and exclusivity.",
     metaTitle: "TikTok Sponsorship Calculator: Price Your Next Brand Deal",
     metaDescription:
       "Price a TikTok sponsorship in under a minute. Use your typical views and the brand's terms — usage, Spark Ads, exclusivity — to get a fair starting rate.",
@@ -397,6 +406,7 @@ export const LANDING_PAGES: LandingPage[] = [
   {
     slug: "brand-deal-calculator",
     linkLabel: "Brand deal calculator",
+    blurb: "What to charge, why, and what to say back — for any brand deal.",
     metaTitle: "Brand Deal Calculator: How Much to Charge for a Sponsorship",
     metaDescription:
       "A brand wants to work with you. Find out how much to charge, see why, and copy a reply to send — free, no account needed.",
@@ -444,6 +454,7 @@ export const LANDING_PAGES: LandingPage[] = [
   {
     slug: "usage-rights-calculator",
     linkLabel: "Usage rights calculator",
+    blurb: "Price organic reuse, paid ads, whitelisting, and buyouts by term.",
     metaTitle: "Usage Rights Calculator: How Much to Charge for Content Usage",
     metaDescription:
       "How much should you charge when a brand wants to reuse your content? Price organic usage, paid ads, whitelisting, and buyouts by term.",
@@ -493,6 +504,7 @@ export const LANDING_PAGES: LandingPage[] = [
   {
     slug: "whitelisting-calculator",
     linkLabel: "Whitelisting calculator",
+    blurb: "Price Spark Ads and partnership ads by how long the brand can run them.",
     metaTitle: "Whitelisting Calculator: How to Price Spark Ads & Partnership Ads",
     metaDescription:
       "Price whitelisting, Spark Ads, and Instagram partnership ads. See how the term changes the fee and generate a quote for the brand.",
